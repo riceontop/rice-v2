@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="#">
+    <title>rice</title>
+</head>
+<body>
+
+    <ul class="navbar">
+        <li name="stats" class="item" onclick="openmenu('stats')">stats</li>
+        <li name="joinservers" class="selected-item item" onclick="openmenu('joinservers')">Join Servers</li>
+        <li name="chat" class="item" onclick="openmenu('chat')">Chat</li>
+        <li name="simple" class="item" onclick="openmenu('simple')">Simple</li>
+        <li name="script" class="item" onclick="openmenu('script')">Scripts</li>
+        <li name="" class="item">Console</li>
+    </ul>
+    
+    <div>
+        <div class="hidden menu" id="stats">
+            <h1>Stats</h1>
+            <div class="content">
+                <h2>General</h2>
+                Bots online:
+                <br> 
+                Bots died:
+                <br>
+                Player kills:
+                <br>
+                Other kills:
+                <br>
+                Messages send:
+                <br>
+                Messages received:
+            </div>
+        </div>
+        <div class="menu" id="joinservers">
+            <h1>Join Servers</h1>
+            <div class="content">
+                Ip or Domain
+                <br>
+                <input type="text" id="serverip">
+                <br>
+                Maximum Amount of Bots
+                <br>
+                <input type="number" id="MaximumAmountofBots">
+                <br>
+                Join/login delay (in ms)
+                <br>
+                <input type="number" id="joindelay" value="10000">
+                <br>                
+                Say msg on spawn
+                <br>
+                <input type="text" id="spawnmsg">
+                <br>
+                Version
+                <br>
+                <select name="version" id="version">
+                    <option value="auto">auto</option>
+                    <option value="1.18.2">1.18.2</option>
+                    <option value="1.18.1">1.18.1</option>
+                    <option value="1.18">1.18</option>
+                    <option value="1.17.1">1.17.1</option>
+                    <option value="1.16.5">1.16.5</option>
+                    <option value="1.15.2">1.15.2</option>
+                    <option value="1.14.4">1.14.4</option>
+                    <option value="1.13.2">1.13.2</option>
+                    <option value="1.12.2">1.12.2</option>
+                    <option value="1.11.2">1.11.2</option>
+                    <option value="1.10.2">1.10.2</option>
+                    <option value="1.9.4">1.9.4</option>
+                    <option value="1.8.9">1.8.9</option>
+                    <option value="1.7.10">1.7.10</option>
+                </select>
+                Names/Passwords
+                <br>
+                <textarea id="credentials" cols="30" rows="10" placeholder="Put the credentials in like name:password. When you want to do it cracked just put the names. When you want randome names just leave it empty"></textarea>
+                <br>
+                <input type="button" value="Submit" onclick='
+                    Socket.send(JSON.stringify({
+                        "action": "join",
+                        "serverip": document.getElementById("serverip").value,
+                        "maxbots": document.getElementById("MaximumAmountofBots").value,
+                        "version":document.getElementById("version").value,
+                        "credentials":document.getElementById("credentials").value,
+                        "joindelay":document.getElementById("joindelay").value,
+                        "spawnmsg":document.getElementById("spawnmsg").value
+                    }))
+                '>
+            </div>
+        </div>
+        <div class="hidden menu" id="chat">
+            <h1>Chat</h1>
+            <div class="content">
+                <h2>Say Something</h2>
+                Message
+                <br>
+                <input type="text" id="saymessage">
+                <br>
+                Delay
+                <br>
+                <input type="number" id="saydelay">
+                <br>
+                <input type="button" value="Submit" onclick='
+                    Socket.send(JSON.stringify({
+                        "action": "say",
+                        "message": document.getElementById("saymessage").value,
+                        "delay": document.getElementById("saydelay").value,
+                        "say": true
+                    }))
+                '>
+            </div>
+            <div class="content">
+                <h2>Spam Something</h2>
+                Message
+                <br>
+                <input type="text" id="spammessage">
+                <br>
+                Delay
+                <br>
+                <input type="number" id="spamdelay">
+                <br>
+                <input type="button" value="start" onclick='
+                    Socket.send(JSON.stringify({
+                        "action": "say",
+                        "message": document.getElementById("spammessage").value,
+                        "delay": document.getElementById("spamdelay").value,
+                        "say":false,
+                        "start":true
+                    }))
+                '>
+                <br>
+                <input type="button" value="stop" onclick='
+                    Socket.send(JSON.stringify({
+                        "action": "say",
+                        "message": document.getElementById("saymessage").value,
+                        "delay": document.getElementById("saydelay").value,
+                        "say":false,
+                        "start":false
+                    }))
+                '>
+            </div>
+        </div>
+
+        <div class="hidden menu" id="simple">
+            <h1>Simple stuff</h1>
+            <div class="content">
+                Method
+                <select name="mode" id="antiafkingmode">
+                    <option value="turn">turn around</option>
+                    <option value="walk">walk forward</option>
+                    <option value="sneak">sneak</option>
+                </select>
+                <input type="button" value="Start" onclick='
+                    Socket.send(JSON.stringify({
+                        "action": "simple",
+                        "method": document.getElementById("antiafkingmode").value,
+                        "start":true
+                    }))
+                '>
+                <br>
+                <input type="button" value="Stop" onclick='
+                    Socket.send(JSON.stringify({
+                        "action": "simple",
+                        "method": document.getElementById("antiafkingmode").value,
+                        "start":false
+                    }))
+                '>
+            </div>
+        </div>
+
+        <div class="hidden menu" id="script">
+            <h1>Scripts (Beta)</h1>
+            <div class="content">
+                Script
+                <br>
+                <input type="button" value="Start" onclick='
+                    Socket.send(JSON.stringify({
+                        "action": "script"
+                    }))
+                '>
+            </div>
+        </div>
+    </div>
+    <div class="notifications" id="notifications">
+        
+    </div>
+
+    <script>
+        window.addEventListener("load", () => {
+            Socket = new WebSocket("ws://localhost:8000/ws")
+            
+            Socket.onmessage = (event) => {
+                notify(event.data)
+                console.log(event.data)
+            }
+        })
+
+        function notify(msg) {
+            var dateSpan = document.createElement('span')
+            dateSpan.innerHTML = msg
+            dateSpan.classList.add("notify")
+            document.getElementById("notifications").prepend(dateSpan)
+            setTimeout(()=>{
+                dateSpan.classList.add("shown")
+                setTimeout(()=>{
+                    dateSpan.classList.remove("shown")
+                    setTimeout(()=>{
+                        dateSpan.remove()
+                    },1500)
+                },5000)
+            },5)
+        }
+
+        function openmenu(menu) {
+            document.querySelectorAll(".menu").forEach((el)=>{
+                el.classList.add("hidden")
+            })
+            document.getElementById(menu).classList.remove("hidden")
+            document.querySelectorAll(".item").forEach((el)=>{
+              el.classList.remove("selected-item")
+            })
+            document.getElementsByName(menu)[0].classList.add("selected-item")
+            
+        }
+
+        function changetitle() {
+            const rice = {
+                "r":["𝔯","𝖗","𝓻","𝓇","𝕣","ｒ","ʀ","ɹ","🅁","🆁","ᵣ","ʳ","ⓡ","г","ɾ","r","𝐫","𝗿","𝘳","Я","я","Ɽ","r","尺","尺","r","ɾ","ᖇ","ᖇ","Ｒ","𝐑","𝓇","𝓻","Ⓡ"],
+                "i":["𝔦","𝖎","𝓲","𝒾","𝕚","ｉ","ɪ","ı","🄸","🅸","ᵢ","ⁱ","ⓘ","เ","ι","i","𝐢","𝗶","𝘪","I","ι","ł","ï","丨","ﾉ","҉","ì","I","ᓰ","Į","ι","Į","丨","Ｉ"],
+                "c":["𝔠","𝖈","𝓬","𝒸","𝕔","ｃ","ᴄ","ɔ","🄲","🅲","c","ᶜ","ⓒ","ς","ƈ","¢","𝐜","𝗰","𝘤","ᄃ","¢","₵","¢","匚","ᄃ","c","ç","ᑕ","ᑢ","𝔠","Ć","ς","𝕔","𝐂"],
+                "e":["𝔢","𝖊","𝓮","𝑒","𝕖","ｅ","ᴇ","ǝ","🄴","🅴","ₑ","ᵉ","ⓔ","є","ҽ","ē","𝐞","𝗲","𝘦","Σ","є","Ɇ","ê","乇","乇","e","ҽ","E","ᘿ","ⓔ","ᗴ","𝔢","乇","𝐄"]
+            }
+            document.title = rice.r[Math.floor(Math.random()*rice.r.length)] + rice.i[Math.floor(Math.random()*rice.i.length)] + rice.c[Math.floor(Math.random()*rice.c.length)] + rice.e[Math.floor(Math.random()*rice.e.length)]           
+        }
+
+        changetitle()
+
+    </script>
+
+
+
+</body>
+</html>

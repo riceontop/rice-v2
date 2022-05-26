@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #393939;
+    font-family: "Poppins";
+    color: white;
+    display: flex;
+    overflow: hidden;
+}
+
+.navbar {
+    background-color: #2e2e2e;
+    width: 20vh;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    margin-right: 1rem;
+}
+
+ul li {
+    list-style-type: none;
+    font-size: 1.5rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.selected-item {
+    background-color:  #00b143;
+}
+
+.menu.hidden {
+    display: none;
+}
+
+h1 {
+    padding: 0;
+    margin: 0;
+}
+
+.content {
+    padding: 2rem;
+    background-color: #2f2f2f;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+}
+
+
+input[type="text"], input[type="number"], textarea, input[type="button"] {
+    background-color: black;
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    width: 60vh;
+    font-size: 16px;
+    resize: none;
+}
+
+input[type="button"] {
+    margin-top: 1rem;
+    background-color: #0d6efd;
+    cursor: pointer;
+}
+
+
+input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0px 0px 1em 0px #0d6efd;;
+}
+
+select {
+    width: 100%;
+    height: 40px;
+    -moz-padding-start: calc(10px - 3px);
+    padding-left: 10px;
+    font-size: 16px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.notifications {
+    top: 0;
+    right: 0px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.notify {
+    background-color: #00b143;
+    padding: 1rem;
+    margin: 1rem;
+    top: 10px;
+    border-radius: 5px;
+    border-left: 8px solid #00e056;
+    transition: 1s;
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.notify.shown {
+    transform: translateX(0);
+    opacity: 1;
+}
